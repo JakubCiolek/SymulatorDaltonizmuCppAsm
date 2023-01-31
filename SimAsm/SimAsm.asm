@@ -10,29 +10,29 @@
  vecs8 DD 0.0,0.0,0.0,0.0
 .code
 SimulatorAsm proc
-movups xmm0, [rcx] ;wczytanie tablicy argumentów to rejestru xmm0
+movups xmm0, [rcx] ;wczytanie tablicy argumentow to rejestru xmm0
 ; przenoszenie wektorow ze stalymi do rejestrow
 movups xmm1, [vecs1] 
 movups xmm2, [vecs2]
 movups xmm3, [vecs3]
-; mno¿enie wektrow kolejno dla sRsGsB
+; mnozenie wektrow ze stalymi przez odpowiednie wektory z danymi wejsciowymi kolejno dla sRsGsB
 mulps xmm1,  xmm0
 mulps xmm2,  xmm0
 mulps xmm3,  xmm0
 movups xmm4, [vecs4] ; zaladowanie wektora z zerami do xmm4
-; poziome spakowane dodawanie elementow wektora aby otzrymac finalna wartosc sR
+; Packed Single-FP Horizontal Add poziome dodawanie elementow wektora aby otrzymac finalna wartosc sR
 haddps xmm1, xmm4
 haddps xmm1, xmm4
 ; przeniesienie wyniku dodawania  do eax
 movd eax, xmm1
 mov [rcx], eax
-; poziome spakowane dodawanie elementow wektora aby otzrymac finalna wartosc sG
+; poziome dodawanie elementow wektora aby otrzymac finalna wartosc sG
 haddps xmm2, xmm4
 haddps xmm2, xmm4
 ; przeniesienie wyniku dodawania  do eax
 movd eax, xmm2
 mov [rcx+4], eax 
-; poziome spakowane dodawanie elementow wektora aby otzrymac finalna wartosc sB
+; poziome dodawanie elementow wektora aby otrzymac finalna wartosc sB
 haddps xmm3, xmm4
 haddps xmm3, xmm4
 ; przeniesienie wyniku dodawania  do eax
