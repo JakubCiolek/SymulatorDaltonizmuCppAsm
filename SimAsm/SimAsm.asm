@@ -1,4 +1,4 @@
-.data
+.data ; definicja sta³ych potrzebnych do obliczeñ
  vecs1 DD 3.063218, -1.393325, -0.475802, 0.0
  vecs2 DD -0.969243, 1.875966, 0.041555, 0.0
  vecs3 DD 0.067871,-0.228834, 1.069251, 0.0
