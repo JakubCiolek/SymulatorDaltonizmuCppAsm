@@ -31,6 +31,15 @@ namespace SymulatorDaltonizmu2
             {
                 Bitmap image = new Bitmap(opf.FileName);
                 simulator = new Simulator(image);
+                if(cLibrary.Checked)
+                {
+                    simulator.setLibrary(true);
+                }
+                else
+                {
+                    simulator.setLibrary(false);
+                }
+                
                 defaultView.Image = simulator.GetImage();
                 simulator.setThreads(trackBar1.Value);
 

@@ -21,7 +21,7 @@ namespace SymulatorDaltonizmu2
     {
         private Bitmap image;
         private Bitmap blindImage;
-        private bool library = true;
+        private bool library;
         int threadsNo = 1;
 
         private int range;
