@@ -52,13 +52,23 @@ namespace SymulatorDaltonizmu2
             powGammaLookup = create_Gamma_Lookup();
             pixelArray = new Color[blindImage.Width, blindImage.Height];
         }
+#if DEBUG
+    [DllImport("E:\\StudiaWszystkiePliki\\studia\\JA\\projekt\\SymulatorDaltonizmu2\\x64\\Debug\\SimAsm.dll")]
+        static extern void SimulatorAsm(float[] xyz, float[] xyz1);
 
+        [DllImport("E:\\StudiaWszystkiePliki\\studia\\JA\\projekt\\SymulatorDaltonizmu2\\x64\\Debug\\SimCpp.dll")]
+        [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+        static extern void Simcpp(float[] xyz);
+#else
         [DllImport("E:\\StudiaWszystkiePliki\\studia\\JA\\projekt\\SymulatorDaltonizmu2\\x64\\Release\\SimAsm.dll")]
         static extern void SimulatorAsm(float[] xyz, float[] xyz1);
 
         [DllImport("E:\\StudiaWszystkiePliki\\studia\\JA\\projekt\\SymulatorDaltonizmu2\\x64\\Release\\SimCpp.dll")]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
         static extern void Simcpp(float[] xyz);
+#endif
+
+
 
         public Bitmap GetImage()
         {
