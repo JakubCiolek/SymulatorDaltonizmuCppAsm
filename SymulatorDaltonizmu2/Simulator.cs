@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Runtime.CompilerServices;
 using System.Timers;
+using System.Drawing.Imaging;
 
 namespace SymulatorDaltonizmu2
 {
@@ -52,10 +53,10 @@ namespace SymulatorDaltonizmu2
             pixelArray = new Color[blindImage.Width, blindImage.Height];
         }
 
-        [DllImport("E:\\StudiaWszystkiePliki\\studia\\JA\\projekt\\SymulatorDaltonizmu2\\x64\\Debug\\SimAsm.dll")]
+        [DllImport("E:\\StudiaWszystkiePliki\\studia\\JA\\projekt\\SymulatorDaltonizmu2\\x64\\Release\\SimAsm.dll")]
         static extern void SimulatorAsm(float[] xyz, float[] xyz1);
 
-        [DllImport("E:\\StudiaWszystkiePliki\\studia\\JA\\projekt\\SymulatorDaltonizmu2\\x64\\Debug\\SimCpp.dll")]
+        [DllImport("E:\\StudiaWszystkiePliki\\studia\\JA\\projekt\\SymulatorDaltonizmu2\\x64\\Release\\SimCpp.dll")]
         [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
         static extern void Simcpp(float[] xyz);
 
@@ -280,5 +281,35 @@ namespace SymulatorDaltonizmu2
             return simulate().ToString();
         }
 
+        public void TurboTest()
+        {
+            String outputPath = "C:\\Users\\Kubotronic\\Desktop\\res\\"
+                + DateTime.Now.ToString("yyyyMMdd-hhmmssss") + ".csv";
+
+            StreamWriter writer = new StreamWriter(outputPath);
+            writer.WriteLine("threads,C++,Asm");
+
+            List<long> resultscpp = new List<long>();
+            List<long> resultsasm = new List<long>();
+            for (int numberOfThreads = 1; numberOfThreads <= 64; numberOfThreads++)
+            {
+                threadsNo = numberOfThreads;
+                for (int i = 0; i < 3; i++)
+                {
+                    library = true; //cpp
+                    resultscpp.Add(simulate());
+                    library = false; // asm
+                    resultsasm.Add(simulate());
+                }
+
+                writer.Write(numberOfThreads + "," + ((int)(resultscpp.Average())).ToString() + "," + ((int)(resultsasm.Average())).ToString() + "\n");
+                writer.Flush();
+                resultscpp.Clear();
+                resultsasm.Clear();
+               
+            }
+            writer.Close();
+
+        }
     }
 }

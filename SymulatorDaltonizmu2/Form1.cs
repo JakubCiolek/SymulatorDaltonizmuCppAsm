@@ -18,6 +18,7 @@ namespace SymulatorDaltonizmu2
             {
                 time.Text = simulator.start() + " ms";
                 colorBlindView.Image = simulator.GetBlindImage();
+                //simulator.TurboTest();
             }
         }
 
